@@ -1,10 +1,10 @@
 ﻿using ContactsDemo.Interfaces;
-using SQLite;
+
 using Xamarin.Forms;
 
 namespace ContactsDemo.Models
 {
-    [Table("Contacts")]
+    
     public class Model_Contact : _Base_Model, IContact
     {
        public Model_Contact()
@@ -12,44 +12,40 @@ namespace ContactsDemo.Models
 
         }
 
-        public Model_Contact(string pFirstName, string pLastName, string pCompany, string pEmail, string pPhone,
-            bool pIsFavorite, Model_Address pAddress, string pContactImageSource)
+        public Model_Contact(string pName, string pCompany, string pEmail, string pPhone,
+            bool pIsFavorite, string pContactImageSource)
         {
-            FirstName = pFirstName ?? "Empty";
-            LastName = pLastName ?? "Empty";
+            Name = Name ?? "Empty";           
             Company = pCompany ?? "Empty";           
             Email = pEmail ?? "Empty";
             Phone = pPhone ?? "Empty";
-            isFavorite = pIsFavorite;
-            Address = pAddress;
+            isFavorite = pIsFavorite;            
             ContactImageSource = pContactImageSource ?? "defaultcontact.png";
 
         }
-
-        [PrimaryKey, AutoIncrement]
-        public int ContactID { get; set; }
-
-        public string FirstName { get; set; }
+                   
+        public string Name { get; set; }
         public string LastName { get; set; }
         public string Company { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        private bool _isFavorite { get; set; }
         public bool isFavorite
         {
-            get { return isFavorite; }
+            get { return _isFavorite; }
             set
             {
-                isFavorite = value;
+                _isFavorite = value;
                 FavorateImageSource = (isFavorite == true) ?  "starfavorited.png" :  "starempty.png";               
             }
         }
-        public Model_Address Address { get; set; }
+        
         public string ContactImageSource { get; set; }
         public string FavorateImageSource { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", FirstName, LastName);
+           return Name;
         }
     }
 }

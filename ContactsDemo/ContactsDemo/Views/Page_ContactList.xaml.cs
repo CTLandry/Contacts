@@ -15,6 +15,7 @@ namespace ContactsDemo.Views
 		public Page_ContactList ()
 		{
 			InitializeComponent ();
+            BindingContext = new ViewModel.ViewModel_ContactList();
 		}
 	}
 }

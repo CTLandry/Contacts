@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModel="clr-namespace:ContactsDemo.ViewModel"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
              x:Class="ContactsDemo.Views.Page_ContactDetail"
-             Title="Contact Detail">
-    <ContentPage.BindingContext>
-        <viewModel:ViewModel_ContactDetail />
-    </ContentPage.BindingContext>
+             Title="Contact Detail">   
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="Contact Detail"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

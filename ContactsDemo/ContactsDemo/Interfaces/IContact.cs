@@ -6,11 +6,10 @@ namespace ContactsDemo.Interfaces
 {
     interface IContact
     {
-        string FirstName { get; set; }
-        string LastName { get; set; }
+        string Name { get; set; }        
         string Company { get; set; }       
         string Email { get; set; }
         string Phone { get; set; }
-        Models.Model_Address Address { get; set; }
+        
     }
 }

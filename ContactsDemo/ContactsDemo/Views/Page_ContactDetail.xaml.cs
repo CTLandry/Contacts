@@ -12,9 +12,10 @@ namespace ContactsDemo.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Page_ContactDetail : ContentPage
 	{
-		public Page_ContactDetail ()
+		public Page_ContactDetail (Models.Model_Contact contact)
 		{
 			InitializeComponent ();
+            BindingContext = new ViewModel.ViewModel_ContactDetail(contact);
 		}
 	}
 }

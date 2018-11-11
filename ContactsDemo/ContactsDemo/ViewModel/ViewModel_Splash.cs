@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Permissions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,15 @@ namespace ContactsDemo.ViewModel
         {
            
             Task.Run(async () => await InitializeApp());
-        }       
+        }
 
         public async Task InitializeApp()
         {
-            await Task.Delay(1000); //for effect
+            await Task.Delay(1000); //for effect            
             await App.MasterNavigation.PushAsync(new Views.Page_ContactList());
             App.Current.MainPage = App.MasterNavigation;
         }
+
+       
     }
 }
