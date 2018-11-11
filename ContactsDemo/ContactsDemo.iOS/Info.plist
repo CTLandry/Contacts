@@ -34,5 +34,7 @@
     <string>ContactsDemo</string>
     <key>XSAppIconAssets</key>
     <string>Assets.xcassets/AppIcon.appiconset</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Contacts demo would like to see your contacts</string>
 </dict>
 </plist>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:ContactsDemo.ViewModel"
+             x:Class="ContactsDemo.Views.Page_Splash">
+    <ContentPage.BindingContext>
+        <viewModel:ViewModel_Splash />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+
+        <Image Aspect="AspectFit" Source="splash.png"/>
+
+    </ContentPage.Content>
+</ContentPage>
