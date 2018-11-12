@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:vm="clr-namespace:ContactsDemo.ViewModel"
+             xmlns:controls="clr-namespace:ContactsDemo.Controls"
              x:Class="ContactsDemo.Views.Page_ContactList"             
              Title="Contacts">
     <ContentPage.BindingContext>
@@ -9,12 +10,12 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <ListView x:Name="ListOfContacts"
+        <controls:ClickableListView x:Name="ListOfContacts"
                   HorizontalOptions="FillAndExpand"
                   VerticalOptions="FillAndExpand"                  
                   ItemsSource="{Binding PropertyContacts}"
-                  SelectedItem="{Binding PropertySelectedContact}"
-                  ItemTapped="{Binding ContactSelected}"
+                  SelectedItem="{Binding PropertySelectedContact}"   
+                  ItemClickCommand="{Binding ContactSelected}"
                   HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -50,6 +51,6 @@
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>           
-        </ListView>
+        </controls:ClickableListView>
     </ContentPage.Content>
 </ContentPage>
