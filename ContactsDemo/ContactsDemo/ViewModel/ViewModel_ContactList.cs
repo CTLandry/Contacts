@@ -11,14 +11,7 @@ namespace ContactsDemo.ViewModel
 {
     public class ViewModel_ContactList : _Base_ViewModel
     {
-        private bool _pageVisible = true;
-        public bool PageControlsVisible
-        {
-            set { SetProperty(ref _pageVisible, value); }
-            get { return _pageVisible; }
-        }
-
-
+       
         private ObservableCollection<Models.Model_Contact> _Contacts;
         public ObservableCollection<Models.Model_Contact> PropertyContacts
         {
