@@ -2,12 +2,36 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
              x:Class="ContactsDemo.Views.Page_ContactDetail"
-             Title="Contact Detail">   
+             Title="{Binding PropertyContact.Name}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Contact Detail"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid x:Name="Contact" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Aspect="AspectFit"
+                   Source="{Binding PropertyContact.ContactImageSource}"
+                   Grid.Row="0"
+                   Grid.Column="0"/>
+             <Label HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Text="{Binding PropertyContact.Name}"
+                    TextColor="Black"
+                    Grid.Row="1"
+                    Grid.Column="1"/>
+            <Label HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Text="{Binding PropertyContact.Phone}"
+                    TextColor="Black"
+                    Grid.Row="2"
+                    Grid.Column="1"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

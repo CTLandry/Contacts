@@ -6,50 +6,26 @@ using System.Text;
 
 namespace ContactsDemo.ViewModel
 {
-    public abstract class _Base_ViewModel : INotifyPropertyChanged
+    public class _Base_ViewModel : INotifyPropertyChanged
     {
+         public event PropertyChangedEventHandler PropertyChanged;
 
-        // ViewModels within this MVVM framework will implement INotifyProperty Changed on their properties mutator
-        // Based on the Charles Petzold implementation from Creating Mobile Apps with Xamarin.Forms
-
-        private bool _isBusy;
-        public bool PropertyIsBusy
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            set { SetProperty(ref _isBusy, value); }
-            get { return _isBusy; }
-        }
-
-        private bool _UIVisible;
-        public bool PropertyUIVisible
-        {
-            set { SetProperty(ref _UIVisible, value); }
-            get { return _UIVisible; }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (Object.Equals(storage, value))
-            {
-                return false;
-            }
-
+            if (Object.Equals(storage, value)) return false;
             storage = value;
             OnPropertyChanged(propertyName);
-
             return true;
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
-
-            if(handler != null)
+            if (handler != null)
             {
-                handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-    }
+     
+    }       
 }

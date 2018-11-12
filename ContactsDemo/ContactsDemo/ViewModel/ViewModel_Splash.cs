@@ -1,6 +1,7 @@
 ﻿using Plugin.Permissions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -17,11 +18,11 @@ namespace ContactsDemo.ViewModel
 
         public async Task InitializeApp()
         {
-            await Task.Delay(1000); //for effect            
+           
+            await App.ContactsDatabase.SyncContacts();
             await App.MasterNavigation.PushAsync(new Views.Page_ContactList());
             App.Current.MainPage = App.MasterNavigation;
-        }
+        }     
 
-       
     }
 }

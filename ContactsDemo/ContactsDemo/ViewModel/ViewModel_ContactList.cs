@@ -9,8 +9,16 @@ using Xamarin.Forms;
 
 namespace ContactsDemo.ViewModel
 {
-    class ViewModel_ContactList : _Base_ViewModel
+    public class ViewModel_ContactList : _Base_ViewModel
     {
+        private bool _pageVisible = true;
+        public bool PageControlsVisible
+        {
+            set { SetProperty(ref _pageVisible, value); }
+            get { return _pageVisible; }
+        }
+
+
         private ObservableCollection<Models.Model_Contact> _Contacts;
         public ObservableCollection<Models.Model_Contact> PropertyContacts
         {
@@ -27,49 +35,13 @@ namespace ContactsDemo.ViewModel
 
         public ViewModel_ContactList()
         {
-            try
-            {
-                PropertyIsBusy = true;
-                PropertyUIVisible = false;
-
-                Task.Run(async () => PropertyContacts = await LoadContacts());
-            }
-            catch(System.Exception ex)
-            {
-                var error = ex.Message;
-            }
-            finally
-            {
-                PropertyIsBusy = false;
-                PropertyUIVisible = true;
-            }
-            
+            Task.Run(async () => PropertyContacts = await LoadContacts());
         }
-       
+
         private async Task<ObservableCollection<Models.Model_Contact>> LoadContacts()
         {
-            ObservableCollection<Models.Model_Contact> contacts = new ObservableCollection<Models.Model_Contact>();
-            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Contacts);
-
-            if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
-            {
-                var requestpermissionresult = await CrossPermissions.Current.RequestPermissionsAsync(Plugin.Permissions.Abstractions.Permission.Contacts);
-
-                if (requestpermissionresult[Plugin.Permissions.Abstractions.Permission.Contacts] != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
-                {
-                    Device.BeginInvokeOnMainThread(() => App.MasterNavigation.CurrentPage.DisplayAlert("Denied Permission", "This demo cannot show contacts without permission to see them.", "Ok"));
-                    return contacts;
-                }
-            }
-
-            var devicecontacts = await Plugin.ContactService.CrossContactService.Current.GetContactListAsync();
-
-            foreach (Plugin.ContactService.Shared.Contact x in (IList<Plugin.ContactService.Shared.Contact>)devicecontacts)
-            {
-                contacts.Add(new Models.Model_Contact(x.Name,null, x.Email, x.Number, false, x.PhotoUriThumbnail));
-            }
-
-            return contacts;
+            var contacts = await App.ContactsDatabase.GetContacts();
+            return new ObservableCollection<Models.Model_Contact>(contacts);
         }
 
         private ICommand _contactSelected;
@@ -81,9 +53,10 @@ namespace ContactsDemo.ViewModel
             }
         }
 
-        private async Task ExecuteContactSelected(Models.Model_Contact selectedContact)
+        private async Task ExecuteContactSelected(Models.Model_Contact contact)
         {
-            await App.MasterNavigation.PushAsync(new Views.Page_ContactDetail(selectedContact));
+
+            await App.MasterNavigation.PushAsync(new Views.Page_ContactDetail(contact));
         }
 
         private ICommand _favoriteSelected;
@@ -97,7 +70,7 @@ namespace ContactsDemo.ViewModel
 
         private async Task ExecuteFavoriteSelected(Models.Model_Contact selectedContact)
         {
-
+            var test = selectedContact;
         }
 
     }

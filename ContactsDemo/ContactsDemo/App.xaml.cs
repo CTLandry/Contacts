@@ -1,4 +1,5 @@
-﻿using ContactsDemo.Views;
+﻿using ContactsDemo.Database;
+using ContactsDemo.Views;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -10,12 +11,25 @@ namespace ContactsDemo
     public partial class App : Application
     {
         public static NavigationPage MasterNavigation;
-       
-       
+        static Contacts_DB contactsSQLiteDB;
+
+        public static Contacts_DB ContactsDatabase
+        {
+            get
+            {
+                if (contactsSQLiteDB == null)
+                {
+                    contactsSQLiteDB = new Contacts_DB(
+                      Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ContactsSQLite.db3"));
+                }
+                return contactsSQLiteDB;
+            }
+        }
+
         public App()
         {
             InitializeComponent();
-
+           
             MasterNavigation = new NavigationPage();
             MainPage = new Page_Splash();
         }
@@ -35,6 +49,6 @@ namespace ContactsDemo
             // Handle when your app resumes
         }
 
-      
+
     }
 }

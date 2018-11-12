@@ -1,15 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
-             x:Class="ContactsDemo.Views.Page_ContactList"
-             Title="Contacts"
-             IsBusy="{Binding PropertyIsBusy}">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:ContactsDemo.ViewModel"
+             x:Class="ContactsDemo.Views.Page_ContactList"             
+             Title="Contacts">
+    <ContentPage.BindingContext>
+        <vm:ViewModel_ContactList/>
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
-        <ListView x:Name="ContactsList"
+        <ListView x:Name="ListOfContacts"
                   HorizontalOptions="FillAndExpand"
                   VerticalOptions="FillAndExpand"                  
                   ItemsSource="{Binding PropertyContacts}"
                   SelectedItem="{Binding PropertySelectedContact}"
+                  ItemTapped="{Binding ContactSelected}"
                   HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -33,12 +38,13 @@
                                        TextColor="Black"
                                        Grid.Row="0"
                                        Grid.Column="1"/>
-                                <Image HorizontalOptions="Center"
+                                <Button HorizontalOptions="Start"
                                        VerticalOptions="Center"
-                                       Aspect="AspectFit"
-                                       Source="{Binding FavorateImageSource}"
+                                       Image="{Binding FavorateImageSource}"                                       
                                        Grid.Row="0"
-                                       Grid.Column="2"/>
+                                       Grid.Column="2"                                      
+                                       CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"
+                                       Command="{Binding FavoriteSelected}"/>
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>
