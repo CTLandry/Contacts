@@ -7,7 +7,7 @@ namespace ContactsDemo.Interfaces
 {
     public interface IMedia
     {
-        // System.IO.Stream ResolveImage(string imagepath);
-         List<Models.Model_Contact> FillContacts();
+          System.IO.Stream ResolveImage(string imagepath);
+         
     }
 }

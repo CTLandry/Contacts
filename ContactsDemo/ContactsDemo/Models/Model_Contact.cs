@@ -25,11 +25,11 @@ namespace ContactsDemo.Models
             Email = pEmail ?? "Empty";
             Phone = pPhone ?? "Empty";
             isFavorite = pIsFavorite;
-            ContactImageSource = ContactImageSource;
+            OriginalContactImageSource = pContactImageSource;
         }
 
-        [PrimaryKey, AutoIncrement]
-        public string _ContactID { get; private set; }
+        [PrimaryKey]
+        public int ContactID { get; private set; }
 
         private string _Name;
         public string Name
@@ -70,6 +70,8 @@ namespace ContactsDemo.Models
             get { return _isFavorite; }
         }
         
+        public string OriginalContactImageSource { get; set; }
+
         private ImageSource _ContactImageSource;    
         [Ignore]
         public ImageSource ContactImageSource
@@ -80,9 +82,9 @@ namespace ContactsDemo.Models
             }
             get
             {
-                if (_ContactImageSource != null)
-                {                    
-                    return _ContactImageSource;
+                if (OriginalContactImageSource != null)
+                {
+                    return ImageSource.FromStream(() => DependencyService.Get<IMedia>().ResolveImage(OriginalContactImageSource));
                 }
                 else
                 {

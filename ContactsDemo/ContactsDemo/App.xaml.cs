@@ -11,15 +11,15 @@ namespace ContactsDemo
     public partial class App : Application
     {
         public static NavigationPage MasterNavigation;
-        static Contacts_DB contactsSQLiteDB;
+        static SQLite_Database contactsSQLiteDB;
 
-        public static Contacts_DB ContactsDatabase
+        public static SQLite_Database LocalDatabase
         {
             get
             {
                 if (contactsSQLiteDB == null)
                 {
-                    contactsSQLiteDB = new Contacts_DB(
+                    contactsSQLiteDB = new SQLite_Database(
                       Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ContactsSQLite.db3"));
                 }
                 return contactsSQLiteDB;

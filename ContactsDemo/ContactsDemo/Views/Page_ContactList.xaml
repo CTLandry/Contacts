@@ -13,22 +13,16 @@
     <ContentPage.Content>
         <Grid x:Name="ContactList" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>                
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <SearchBar Grid.Row="0">
+            <SearchBar Grid.Row="0"
+                       SearchCommand="{Binding SearchCommand}">
                 <SearchBar.Behaviors>
                     <behavior:TextChangedBehavior/>
-                </SearchBar.Behaviors>
-            </SearchBar>
-            <ActivityIndicator Grid.Row="1"
-                               IsVisible="{Binding IsBusy}"
-                               IsRunning="{Binding IsBusy}"
-                               Color="Black"
-                               VerticalOptions="CenterAndExpand"
-                               HorizontalOptions="CenterAndExpand"></ActivityIndicator>
-            <controls:ClickableListView Grid.Row="2"
+                </SearchBar.Behaviors>                
+            </SearchBar>           
+            <controls:ClickableListView Grid.Row="1"
                           x:Name="ListOfContacts"
                           HorizontalOptions="FillAndExpand"
                           VerticalOptions="FillAndExpand"                  
@@ -62,9 +56,10 @@
                                            VerticalOptions="Center"
                                            Image="{Binding FavoriteImageSource}"                                       
                                            Grid.Row="0"
-                                           Grid.Column="2"                            
+                                           Grid.Column="2" 
                                            Command="{Binding FavoriteSelected}"
-                                           CommandParameter="{Binding}"/>
+                                           BindingContext="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"                                           
+                                           CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"/>
                                     </Grid>
                                  </ViewCell.View>
                              </ViewCell>

@@ -11,14 +11,7 @@ using Xamarin.Forms;
 namespace ContactsDemo.ViewModel
 {
     public class ViewModel_ContactList : _Base_ViewModel
-    {
-
-        private bool _isBusy = true;
-        public bool IsBusy
-        {
-            set { SetProperty(ref _isBusy, value); }
-            get { return _isBusy; }
-        }
+    {          
 
         private ObservableCollection<Models.Model_Contact> _Contacts;
         public ObservableCollection<Models.Model_Contact> PropertyContacts
@@ -36,15 +29,14 @@ namespace ContactsDemo.ViewModel
 
         public ViewModel_ContactList()
         {
-            Task.Run(async () => PropertyContacts = await LoadContacts());
-            IsBusy = false;
+            Task.Run(async () => PropertyContacts = await LoadContacts());            
         }
 
         private async Task<ObservableCollection<Models.Model_Contact>> LoadContacts()
         {
             try
             {
-                var contacts = await App.ContactsDatabase.GetContactsAsync();
+                var contacts = await App.LocalDatabase.GetContactsAsync();
                 return new ObservableCollection<Models.Model_Contact>(contacts);       
             }
             catch(SystemException ex)
@@ -94,9 +86,23 @@ namespace ContactsDemo.ViewModel
             }
         }
 
-        private async Task<ObservableCollection<Models.Model_Contact>> ExecuteSearchContacts(string searchcriteria)
+        private async Task ExecuteSearchContacts(string searchcriteria)
         {
-            return null;
+            bool AlphaMatch = false;
+            bool NumericMatch = false;
+            await Task.Run(() =>
+            {
+                AlphaMatch = Helpers.Regex.Alpha(searchcriteria);               
+            });
+
+            if(AlphaMatch)
+            {
+                PropertyContacts = new ObservableCollection<Models.Model_Contact>( await App.LocalDatabase.GetContactsAsync(searchcriteria));
+            }
+            else if(NumericMatch)
+            {
+                PropertyContacts = new ObservableCollection<Models.Model_Contact>(await App.LocalDatabase.GetContactsByPhoneAsync(searchcriteria));
+            }
         }
 
     }

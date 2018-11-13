@@ -15,7 +15,7 @@ namespace ContactsDemo.iOS.Media
 {
     class Media_iOS : IMedia
     {
-        public List<Model_Contact> FillContacts()
+        public Stream ResolveImage(string imagepath)
         {
             throw new NotImplementedException();
         }

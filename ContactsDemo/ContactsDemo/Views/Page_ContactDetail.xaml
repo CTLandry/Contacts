@@ -12,26 +12,28 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>               
             </Grid.ColumnDefinitions>
             <Image HorizontalOptions="Center"
                    VerticalOptions="Center"
                    Aspect="AspectFit"
                    Source="{Binding PropertyContact.ContactImageSource}"
                    Grid.Row="0"
-                   Grid.Column="0"/>
-             <Label HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Text="{Binding PropertyContact.Name}"
+                   Grid.Column="0"/>            
+            <Label HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Text="{Binding PropertyContact.Phone, StringFormat=Phone: \{0:(000)\-0000\}}"
                     TextColor="Black"
-                    Grid.Row="1"
-                    Grid.Column="1"/>
-            <Label HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Text="{Binding PropertyContact.Phone}"
-                    TextColor="Black"
+                    FontSize="Medium"
                     Grid.Row="2"
-                    Grid.Column="1"/>
+                    Grid.Column="0"/>
+            <Label HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Text="{Binding PropertyContact.Email}"
+                    TextColor="Black"
+                    FontSize="Medium"
+                    Grid.Row="3"
+                    Grid.Column="0"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

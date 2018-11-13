@@ -27,7 +27,7 @@ namespace ContactsDemo.ViewModel
                 }
             }
 
-            await App.ContactsDatabase.SyncContacts();
+            await App.LocalDatabase.SyncContacts();
             await App.MasterNavigation.PushAsync(new Views.Page_ContactList());
             App.Current.MainPage = App.MasterNavigation;
         }     
