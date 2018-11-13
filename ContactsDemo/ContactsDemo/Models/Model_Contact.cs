@@ -24,12 +24,12 @@ namespace ContactsDemo.Models
             Name = pName ?? "Empty";            
             Email = pEmail ?? "Empty";
             Phone = pPhone ?? "Empty";
-            isFavorite = pIsFavorite;
             OriginalContactImageSource = pContactImageSource;
+            isFavorite = pIsFavorite;            
         }
 
         [PrimaryKey]
-        public int ContactID { get; private set; }
+        public int ContactID { get;  }
 
         private string _Name;
         public string Name
@@ -84,7 +84,8 @@ namespace ContactsDemo.Models
             {
                 if (OriginalContactImageSource != null)
                 {
-                    return ImageSource.FromStream(() => DependencyService.Get<IMedia>().ResolveImage(OriginalContactImageSource));
+                    var photo = DependencyService.Get<IMedia>().ResolveImage(OriginalContactImageSource);
+                    return (photo == null) ? defaultcontactimage : ImageSource.FromStream(() => photo);
                 }
                 else
                 {

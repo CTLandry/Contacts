@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContactsDemo.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace ContactsDemo.Views
            
 		}
 
-        public Page_ContactDetail(Models.Model_Contact contact)
+        public Page_ContactDetail(IContact contact)
         {
             InitializeComponent();
             BindingContext = new ViewModel.ViewModel_ContactDetail(contact);

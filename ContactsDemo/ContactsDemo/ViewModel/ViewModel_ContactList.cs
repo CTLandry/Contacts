@@ -1,4 +1,5 @@
 ﻿using ContactsDemo.Interfaces;
+using ContactsDemo.Repositories;
 using Plugin.Permissions;
 using System;
 using System.Collections.Generic;
@@ -13,31 +14,34 @@ namespace ContactsDemo.ViewModel
     public class ViewModel_ContactList : _Base_ViewModel
     {          
 
-        private ObservableCollection<Models.Model_Contact> _Contacts;
-        public ObservableCollection<Models.Model_Contact> PropertyContacts
+        private ObservableCollection<IContact> _Contacts;
+        public ObservableCollection<IContact> PropertyContacts
         {
             set { SetProperty(ref _Contacts, value); }
             get { return _Contacts; }
         }
 
-        private Models.Model_Contact _selectedContact;
-        public Models.Model_Contact PropertySelectedContact
+        private IContact _selectedContact;
+        public IContact PropertySelectedContact
         {
             set { SetProperty(ref _selectedContact, value); }
             get { return _selectedContact; }
         }
 
+        private IContactsRepository ContactsRepo;
+
         public ViewModel_ContactList()
         {
+            ContactsRepo = new ContactsRepository(App.RepoSource);
             Task.Run(async () => PropertyContacts = await LoadContacts());            
         }
 
-        private async Task<ObservableCollection<Models.Model_Contact>> LoadContacts()
+        private async Task<ObservableCollection<IContact>> LoadContacts()
         {
             try
             {
-                var contacts = await App.LocalDatabase.GetContactsAsync();
-                return new ObservableCollection<Models.Model_Contact>(contacts);       
+                var contacts = await ContactsRepo.GetContactsAsync();
+                return new ObservableCollection<IContact>(contacts);       
             }
             catch(SystemException ex)
             {
@@ -52,11 +56,11 @@ namespace ContactsDemo.ViewModel
         {
             get
             {
-                return _contactSelected ?? (_contactSelected = new Command(async (e) => await ExecuteContactSelected((Models.Model_Contact)e)));
+                return _contactSelected ?? (_contactSelected = new Command(async (contact) => await ExecuteContactSelected((IContact)contact)));
             }
         }
 
-        private async Task ExecuteContactSelected(Models.Model_Contact contact)
+        private async Task ExecuteContactSelected(IContact contact)
         {
 
             await App.MasterNavigation.PushAsync(new Views.Page_ContactDetail(contact));
@@ -67,11 +71,11 @@ namespace ContactsDemo.ViewModel
         {
             get
             {
-                return _favoriteSelected ?? (_favoriteSelected = new Command(async (e) => await ExecuteFavoriteSelected((Models.Model_Contact)e)));
+                return _favoriteSelected ?? (_favoriteSelected = new Command(async (contact) => await ExecuteFavoriteSelected((IContact)contact)));
             }
         }
 
-        private async Task ExecuteFavoriteSelected(Models.Model_Contact selectedContact)
+        private async Task ExecuteFavoriteSelected(IContact selectedContact)
         {
             var test = selectedContact;
         }
@@ -97,11 +101,11 @@ namespace ContactsDemo.ViewModel
 
             if(AlphaMatch)
             {
-                PropertyContacts = new ObservableCollection<Models.Model_Contact>( await App.LocalDatabase.GetContactsAsync(searchcriteria));
+                PropertyContacts = new ObservableCollection<IContact>( await ContactsRepo.GetContactsAsync(searchcriteria));
             }
             else if(NumericMatch)
             {
-                PropertyContacts = new ObservableCollection<Models.Model_Contact>(await App.LocalDatabase.GetContactsByPhoneAsync(searchcriteria));
+                PropertyContacts = new ObservableCollection<IContact>(await ContactsRepo.GetContactsByPhoneAsync(searchcriteria));
             }
         }
 

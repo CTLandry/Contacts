@@ -10,16 +10,35 @@ using Android.Provider;
 using Android.Database;
 using System.Collections.Generic;
 using System.IO;
+using Java.IO;
 
 [assembly: Dependency(typeof(ContactsDemo.Droid.Media.Media_Android))]
 namespace ContactsDemo.Droid.Media
 {
     class Media_Android : Activity, IMedia
     {
-        //Having a bit of trouble resolving the local contact image from content://
+        
         public Stream ResolveImage(string imagepath)
-        {             
-            return CrossCurrentActivity.Current.Activity.ContentResolver.OpenInputStream(Android.Net.Uri.Parse(imagepath));
+        {
+            try
+            {
+                //if I had it to do over again I would have rolled my own like the below
+                //I did not realize that photoID and the uri passed back from the plugin
+                //was going to be so unreliable
+                var photoID = ContentUris.ParseId(Android.Net.Uri.Parse(imagepath));
+                var uri = ContentUris.WithAppendedId(ContactsContract.Contacts.ContentUri, photoID);
+                var contactphoto = ContactsContract.Contacts.OpenContactPhotoInputStream(CrossCurrentActivity.Current.Activity.ContentResolver, uri);
+
+                return contactphoto;
+            }
+            catch(System.Exception ex)
+            {
+                var error = ex.Message;
+                return null;
+            }
+          
+            
+         
         }
 
         //public List<Models.Model_Contact> FillContacts()

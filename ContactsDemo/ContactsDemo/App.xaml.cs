@@ -26,6 +26,8 @@ namespace ContactsDemo
             }
         }
 
+        public static Enums.Enum_RepositorySource.Repository RepoSource = Enums.Enum_RepositorySource.Repository.SQLite;
+
         public App()
         {
             InitializeComponent();

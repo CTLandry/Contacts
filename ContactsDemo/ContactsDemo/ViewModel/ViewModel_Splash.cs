@@ -5,14 +5,17 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using ContactsDemo.Interfaces;
 
 namespace ContactsDemo.ViewModel
 {
     class ViewModel_Splash : _Base_ViewModel
     {
+        private IContactsRepository ContactsRepo;
+
         public ViewModel_Splash()
         {
-           
+            ContactsRepo = new Repositories.ContactsRepository(App.RepoSource);
             Task.Run(async () => await InitializeApp());
         }
 
@@ -27,7 +30,7 @@ namespace ContactsDemo.ViewModel
                 }
             }
 
-            await App.LocalDatabase.SyncContacts();
+            await ContactsRepo.SyncContacts();
             await App.MasterNavigation.PushAsync(new Views.Page_ContactList());
             App.Current.MainPage = App.MasterNavigation;
         }     

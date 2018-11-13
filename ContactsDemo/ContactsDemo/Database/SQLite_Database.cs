@@ -1,4 +1,5 @@
-﻿using Plugin.Permissions;
+﻿using ContactsDemo.Interfaces;
+using Plugin.Permissions;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using Xamarin.Forms;
 
 namespace ContactsDemo.Database
 {
-    public class SQLite_Database
+    public class SQLite_Database : IContactsRepository
     {
 
         private static SQLiteAsyncConnection database;
