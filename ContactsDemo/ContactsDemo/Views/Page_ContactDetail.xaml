@@ -9,31 +9,48 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>               
+                <ColumnDefinition Width="auto"></ColumnDefinition>               
             </Grid.ColumnDefinitions>
             <Image HorizontalOptions="Center"
                    VerticalOptions="Center"
                    Aspect="AspectFit"
                    Source="{Binding PropertyContact.ContactImageSource}"
                    Grid.Row="0"
-                   Grid.Column="0"/>            
+                   Grid.Column="0"/>
+            <Image HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Aspect="AspectFit"
+                   Source="{Binding PropertyContact.FavoriteImageSource}"
+                   Grid.Row="0"
+                   Grid.Column="1"/>
             <Label HorizontalOptions="End"
                     VerticalOptions="End"
                     Text="{Binding PropertyContact.Phone, StringFormat=Phone: \{0:(000)\-0000\}}"
                     TextColor="Black"
                     FontSize="Medium"
-                    Grid.Row="2"
-                    Grid.Column="0"/>
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"/>
             <Label HorizontalOptions="End"
                     VerticalOptions="Center"
-                    Text="{Binding PropertyContact.Email}"
+                    Text="{Binding PropertyContact.Email, StringFormat=Email: {0}}"
+                    TextColor="Black"
+                    FontSize="Medium"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"/>
+            <Label HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Text="{Binding PropertyContact.Email, StringFormat=Address: {0}}"
                     TextColor="Black"
                     FontSize="Medium"
                     Grid.Row="3"
-                    Grid.Column="0"/>
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

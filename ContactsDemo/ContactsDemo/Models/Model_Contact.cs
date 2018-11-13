@@ -25,7 +25,8 @@ namespace ContactsDemo.Models
             Email = pEmail ?? "Empty";
             Phone = pPhone ?? "Empty";
             OriginalContactImageSource = pContactImageSource;
-            isFavorite = pIsFavorite;            
+            isFavorite = pIsFavorite;
+           
         }
 
         [PrimaryKey]
@@ -64,12 +65,26 @@ namespace ContactsDemo.Models
         {
             set
             {
-                SetProperty(ref _isFavorite, value);
-                FavoriteImageSource = (isFavorite) ? favoriteimage : notfavoritimage;
+                SetProperty(ref _isFavorite, value);                
             }
             get { return _isFavorite; }
         }
-        
+
+        private ImageSource _FavoriteImageSource;
+        [Ignore]
+        public ImageSource FavoriteImageSource
+        {
+            set
+            {
+                SetProperty(ref _FavoriteImageSource, value);
+            }
+            get
+            {
+                var image = (isFavorite) ? favoriteimage : notfavoritimage;
+                return (isFavorite) ? favoriteimage : notfavoritimage;
+            }
+        }
+
         public string OriginalContactImageSource { get; set; }
 
         private ImageSource _ContactImageSource;    
@@ -94,19 +109,7 @@ namespace ContactsDemo.Models
             }
         }
 
-        private ImageSource _FavoriteImageSource;
-        [Ignore]
-        public ImageSource FavoriteImageSource
-        {
-            set
-            {
-                SetProperty(ref _FavoriteImageSource, value);
-            }
-            get
-            {
-                return _FavoriteImageSource;
-            }
-        }
+       
 
     }
 }

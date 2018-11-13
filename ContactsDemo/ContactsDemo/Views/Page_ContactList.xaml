@@ -49,18 +49,20 @@
                                     <Label HorizontalOptions="Center"
                                            VerticalOptions="Center"
                                            Text="{Binding Name}"
+                                           FontSize="Large"
                                            TextColor="Black"
                                            Grid.Row="0"
                                            Grid.Column="1"/>
                                     <Button HorizontalOptions="Start"
                                            VerticalOptions="Center"
-                                           Image="{Binding FavoriteImageSource}"                                       
+                                           BackgroundColor="Transparent"                                                                                 
                                            Grid.Row="0"
-                                           Grid.Column="2" 
+                                           Grid.Column="2"                                           
+                                           BindingContext="{Binding Source={x:Reference ListOfContacts}, Path=BindingContext}"
                                            Command="{Binding FavoriteSelected}"
-                                           BindingContext="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"                                           
-                                           CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"/>
-                                    </Grid>
+                                           CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}">                                      
+                                    </Button>
+                                </Grid>
                                  </ViewCell.View>
                              </ViewCell>
                             </DataTemplate>
