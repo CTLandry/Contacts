@@ -1,4 +1,5 @@
-﻿using Plugin.Permissions;
+﻿using ContactsDemo.Interfaces;
+using Plugin.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,14 @@ namespace ContactsDemo.ViewModel
 {
     public class ViewModel_ContactList : _Base_ViewModel
     {
-       
+
+        private bool _isBusy = true;
+        public bool IsBusy
+        {
+            set { SetProperty(ref _isBusy, value); }
+            get { return _isBusy; }
+        }
+
         private ObservableCollection<Models.Model_Contact> _Contacts;
         public ObservableCollection<Models.Model_Contact> PropertyContacts
         {
@@ -29,12 +37,22 @@ namespace ContactsDemo.ViewModel
         public ViewModel_ContactList()
         {
             Task.Run(async () => PropertyContacts = await LoadContacts());
+            IsBusy = false;
         }
 
         private async Task<ObservableCollection<Models.Model_Contact>> LoadContacts()
         {
-            var contacts = await App.ContactsDatabase.GetContacts();
-            return new ObservableCollection<Models.Model_Contact>(contacts);
+            try
+            {
+                var contacts = await App.ContactsDatabase.GetContactsAsync();
+                return new ObservableCollection<Models.Model_Contact>(contacts);       
+            }
+            catch(SystemException ex)
+            {
+                var error = ex.Message;
+                return null;
+            }
+          
         }
 
         private ICommand _contactSelected;
@@ -64,6 +82,21 @@ namespace ContactsDemo.ViewModel
         private async Task ExecuteFavoriteSelected(Models.Model_Contact selectedContact)
         {
             var test = selectedContact;
+        }
+
+        private ICommand _searchCommand;
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return _searchCommand ?? (_searchCommand = new Command<string>(async (text) => await ExecuteSearchContacts(text)));
+              
+            }
+        }
+
+        private async Task<ObservableCollection<Models.Model_Contact>> ExecuteSearchContacts(string searchcriteria)
+        {
+            return null;
         }
 
     }

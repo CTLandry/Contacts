@@ -3,54 +3,74 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:vm="clr-namespace:ContactsDemo.ViewModel"
              xmlns:controls="clr-namespace:ContactsDemo.Controls"
+             xmlns:behavior="clr-namespace:ContactsDemo.Behaviors"
              x:Class="ContactsDemo.Views.Page_ContactList"             
              Title="Contacts">
     <ContentPage.BindingContext>
         <vm:ViewModel_ContactList/>
     </ContentPage.BindingContext>
-    
+
     <ContentPage.Content>
-        <controls:ClickableListView x:Name="ListOfContacts"
-                  HorizontalOptions="FillAndExpand"
-                  VerticalOptions="FillAndExpand"                  
-                  ItemsSource="{Binding PropertyContacts}"
-                  SelectedItem="{Binding PropertySelectedContact}"   
-                  ItemClickCommand="{Binding ContactSelected}"
-                  HasUnevenRows="True">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.View>
-                            <Grid x:Name="ContactGridDisplay">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Image HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       Aspect="AspectFit"
-                                       Source="{Binding ContactImageSource}"
-                                       Grid.Row="0"
-                                       Grid.Column="0"/>
-                                <Label HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       Text="{Binding Name}"
-                                       TextColor="Black"
-                                       Grid.Row="0"
-                                       Grid.Column="1"/>
-                                <Button HorizontalOptions="Start"
-                                       VerticalOptions="Center"
-                                       Image="{Binding FavorateImageSource}"                                       
-                                       Grid.Row="0"
-                                       Grid.Column="2"                                      
-                                       CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"
-                                       Command="{Binding FavoriteSelected}"/>
-                            </Grid>
-                        </ViewCell.View>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>           
-        </controls:ClickableListView>
+        <Grid x:Name="ContactList" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <SearchBar Grid.Row="0">
+                <SearchBar.Behaviors>
+                    <behavior:TextChangedBehavior/>
+                </SearchBar.Behaviors>
+            </SearchBar>
+            <ActivityIndicator Grid.Row="1"
+                               IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               Color="Black"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"></ActivityIndicator>
+            <controls:ClickableListView Grid.Row="2"
+                          x:Name="ListOfContacts"
+                          HorizontalOptions="FillAndExpand"
+                          VerticalOptions="FillAndExpand"                  
+                          ItemsSource="{Binding PropertyContacts}"
+                          SelectedItem="{Binding PropertySelectedContact}"   
+                          ItemClickCommand="{Binding ContactSelected}"
+                          HasUnevenRows="True"> 
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid x:Name="ContactGridDisplay">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                    <Image HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Aspect="AspectFit"
+                                           Source="{Binding ContactImageSource}"
+                                           Grid.Row="0"
+                                           Grid.Column="0"/>
+                                    <Label HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Text="{Binding Name}"
+                                           TextColor="Black"
+                                           Grid.Row="0"
+                                           Grid.Column="1"/>
+                                    <Button HorizontalOptions="Start"
+                                           VerticalOptions="Center"
+                                           Image="{Binding FavoriteImageSource}"                                       
+                                           Grid.Row="0"
+                                           Grid.Column="2"                            
+                                           Command="{Binding FavoriteSelected}"
+                                           CommandParameter="{Binding}"/>
+                                    </Grid>
+                                 </ViewCell.View>
+                             </ViewCell>
+                            </DataTemplate>
+                </ListView.ItemTemplate>
+            </controls:ClickableListView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

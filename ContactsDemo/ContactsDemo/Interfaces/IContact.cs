@@ -4,12 +4,10 @@ using System.Text;
 
 namespace ContactsDemo.Interfaces
 {
-    interface IContact
+    public interface IContact
     {
         string Name { get; set; }        
-        string Company { get; set; }       
         string Email { get; set; }
-        string Phone { get; set; }
-        
+        string Phone { get; set; }        
     }
 }

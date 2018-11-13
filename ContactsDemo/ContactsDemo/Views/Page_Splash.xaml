@@ -1,14 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModel="clr-namespace:ContactsDemo.ViewModel"
+             xmlns:vm="clr-namespace:ContactsDemo.ViewModel"
              x:Class="ContactsDemo.Views.Page_Splash">
     <ContentPage.BindingContext>
-        <viewModel:ViewModel_Splash />
+        <vm:ViewModel_Splash />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-
-        <Image Aspect="AspectFit" Source="splash.png"/>
-
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Aspect="AspectFit" 
+                   Source="splash.png"
+                   Grid.Row="0"/>
+            <ActivityIndicator Grid.Row="1"
+                               IsVisible="true"
+                               IsRunning="true"
+                               Color="Black"
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="CenterAndExpand"></ActivityIndicator>
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Text="Loading Contacts...."
+                   TextColor="Black"
+                   Grid.Row="2"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
