@@ -47,42 +47,85 @@ namespace ContactsDemo.Database
 
         public async Task<List<Models.Model_Contact>> GetContactsAsync()
         {
-            return await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts ORDER BY isFavorite, Name");
+            try
+            {
+                return await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts ORDER BY isFavorite desc, Name LIMIT 500");
+            }
+            catch(SQLite.SQLiteException ex)
+            {
+                var error = ex.Message;
+                return null;
+            }
+            
         }
 
         public async Task<List<Models.Model_Contact>> GetContactsAsync(string name)
         {
-            return await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE Name LIKE '%" + name + "%' ORDER BY isFavorite, Name");
+            return await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE Name LIKE '%" + name + "%' ORDER BY isFavorite desc, Name LIMIT 500");
         }
 
         public async Task<List<Models.Model_Contact>> GetContactsByPhoneAsync(string phone)
         {
-            return await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE Phone LIKE '%" + phone + "%' ORDER BY isFavorite, Name");
+            return await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE Phone LIKE '%" + phone + "%' ORDER BY isFavorite desc, Name LIMIT 500");
         }
 
-        public async Task<Models.Model_Contact> GetContactsAsync(int contactid)
+        public async Task<Models.Model_Contact> GetContactByIDAsync(int? contactid)
         {
-            var contactfound = await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts ContactID = ?", contactid);
-            return contactfound[0] ?? null;
-        }
-
-        public async Task<int> SaveContactAsync(Models.Model_Contact item)
-        {
-            if (await GetContactsAsync(item.ContactID) != null)
+            try
             {
-                return await database.UpdateAsync(item);
+                var contactfound = await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE Id = ?", contactid);
+                return contactfound[0] ?? null;
+            }
+            catch(System.Exception ex)
+            {
+                var exmessage = ex.Message;
+                return null;
+            }
+           
+        }
+        
+        public async Task<int> SaveContactAsync(IContact item)
+        {
+            try
+            {
+                var exists = await GetContactByIDAsync(item.Id);
+
+                if (exists != null)
+                {
+                    return await database.UpdateAsync(item);
+                }
+                else
+                {
+                    return await database.InsertAsync(item);
+                }
+            }
+            catch(SQLite.SQLiteException ex)
+            {
+                var message = ex.Message;
+                return 0;
+            }
+            catch(System.SystemException ex)
+            {
+                var message = ex.Message;
+                return 0;
+            }
+           
+        }
+
+        public async Task<int> ClearFavorites()
+        {
+            var favorites = await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE isFavorite = ?", true);
+            if(favorites.Count > 0)
+            {
+                favorites[0].isFavorite = false;
+                return await database.UpdateAsync(favorites[0]);
             }
             else
             {
-                return await database.InsertAsync(item);
+                return 0;
             }
-        }
+            
 
-        public async Task<Models.Model_Contact> GetFavoriteAsync()
-        {
-
-            var query = await database.QueryAsync<Models.Model_Contact>("SELECT * FROM Contacts WHERE isFavorite = ?", true);
-            return query[0] ?? null;
 
         }
 

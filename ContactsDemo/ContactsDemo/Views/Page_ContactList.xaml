@@ -60,7 +60,8 @@
                                            Grid.Column="2"                                           
                                            BindingContext="{Binding Source={x:Reference ListOfContacts}, Path=BindingContext}"
                                            Command="{Binding FavoriteSelected}"
-                                           CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}">                                      
+                                           CommandParameter="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext}"
+                                           Image="{Binding Source={x:Reference ContactGridDisplay}, Path=BindingContext.FavoriteImageSource}" >                                      
                                     </Button>
                                 </Grid>
                                  </ViewCell.View>

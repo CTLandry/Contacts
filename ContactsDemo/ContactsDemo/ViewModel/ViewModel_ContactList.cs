@@ -77,7 +77,15 @@ namespace ContactsDemo.ViewModel
 
         private async Task ExecuteFavoriteSelected(IContact selectedContact)
         {
-            var test = selectedContact;
+            if(!selectedContact.isFavorite)
+            {
+                
+                selectedContact.isFavorite = true;
+                await ContactsRepo.ClearFavorites();
+                await ContactsRepo.SaveContactAsync(selectedContact);
+                PropertyContacts = await LoadContacts();
+            }
+            
         }
 
         private ICommand _searchCommand;
@@ -93,7 +101,7 @@ namespace ContactsDemo.ViewModel
         private async Task ExecuteSearchContacts(string searchcriteria)
         {
             bool AlphaMatch = false;
-            bool NumericMatch = false;
+            
             await Task.Run(() =>
             {
                 AlphaMatch = Helpers.Regex.Alpha(searchcriteria);               
@@ -103,7 +111,7 @@ namespace ContactsDemo.ViewModel
             {
                 PropertyContacts = new ObservableCollection<IContact>( await ContactsRepo.GetContactsAsync(searchcriteria));
             }
-            else if(NumericMatch)
+            else 
             {
                 PropertyContacts = new ObservableCollection<IContact>(await ContactsRepo.GetContactsByPhoneAsync(searchcriteria));
             }

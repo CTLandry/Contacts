@@ -21,16 +21,16 @@ namespace ContactsDemo.Models
         public Model_Contact(string pName, string pEmail, string pPhone,
             bool pIsFavorite, string pContactImageSource)
         {            
-            Name = pName ?? "Empty";            
+            Name = pName ?? "Empty";
             Email = pEmail ?? "Empty";
             Phone = pPhone ?? "Empty";
             OriginalContactImageSource = pContactImageSource;
             isFavorite = pIsFavorite;
-           
+
         }
 
-        [PrimaryKey]
-        public int ContactID { get;  }
+        [SQLite.PrimaryKey, SQLite.AutoIncrement]
+        public int? Id { get; set; }
 
         private string _Name;
         public string Name
@@ -45,7 +45,7 @@ namespace ContactsDemo.Models
             set { SetProperty(ref _LastName, value); }
             get { return _LastName; }
         }
-        
+
         private string _Email;
         public string Email
         {
@@ -65,13 +65,13 @@ namespace ContactsDemo.Models
         {
             set
             {
-                SetProperty(ref _isFavorite, value);                
+                SetProperty(ref _isFavorite, value);
             }
             get { return _isFavorite; }
         }
 
         private ImageSource _FavoriteImageSource;
-        [Ignore]
+        [SQLite.Ignore]
         public ImageSource FavoriteImageSource
         {
             set
@@ -87,8 +87,8 @@ namespace ContactsDemo.Models
 
         public string OriginalContactImageSource { get; set; }
 
-        private ImageSource _ContactImageSource;    
-        [Ignore]
+        private ImageSource _ContactImageSource;
+        [SQLite.Ignore]
         public ImageSource ContactImageSource
         {
             set
@@ -100,7 +100,7 @@ namespace ContactsDemo.Models
                 if (OriginalContactImageSource != null)
                 {
                     var photo = DependencyService.Get<IMedia>().ResolveImage(OriginalContactImageSource);
-                    return (photo == null) ? defaultcontactimage : ImageSource.FromStream(() => photo);
+                    return (photo == null) ? defaultcontactimage : ImageSource.FromStream(() => photo);                                  
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace ContactsDemo.Models
             }
         }
 
-       
+
 
     }
 }

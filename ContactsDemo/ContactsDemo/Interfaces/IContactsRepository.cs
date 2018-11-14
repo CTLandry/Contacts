@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace ContactsDemo.Interfaces
         Task<List<Models.Model_Contact>> GetContactsAsync();
         Task<List<Models.Model_Contact>> GetContactsAsync(string name);
         Task<List<Models.Model_Contact>> GetContactsByPhoneAsync(string phone);
-        Task<Models.Model_Contact> GetContactsAsync(int contactid);
-        Task<int> SaveContactAsync(Models.Model_Contact item);
-        Task<Models.Model_Contact> GetFavoriteAsync();
+        Task<Models.Model_Contact> GetContactByIDAsync(int? contactid);        
+        Task<int> SaveContactAsync(IContact item);
+        Task<int> ClearFavorites();
 
     }
 }

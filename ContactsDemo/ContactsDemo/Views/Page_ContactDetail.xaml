@@ -6,14 +6,14 @@
     <ContentPage.Content>
         <Grid x:Name="Contact" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="72"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>               
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>               
             </Grid.ColumnDefinitions>
             <Image HorizontalOptions="Center"
                    VerticalOptions="Center"
@@ -21,36 +21,47 @@
                    Source="{Binding PropertyContact.ContactImageSource}"
                    Grid.Row="0"
                    Grid.Column="0"/>
-            <Image HorizontalOptions="Center"
+            <Image HorizontalOptions="Start"
                    VerticalOptions="Center"
                    Aspect="AspectFit"
                    Source="{Binding PropertyContact.FavoriteImageSource}"
                    Grid.Row="0"
                    Grid.Column="1"/>
-            <Label HorizontalOptions="End"
-                    VerticalOptions="End"
+            <Label  x:Name="PhoneNumber"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
                     Text="{Binding PropertyContact.Phone, StringFormat=Phone: \{0:(000)\-0000\}}"
                     TextColor="Black"
                     FontSize="Medium"
                     Grid.Row="1"
                     Grid.Column="0"
-                    Grid.ColumnSpan="2"/>
-            <Label HorizontalOptions="End"
+                    Grid.ColumnSpan="2">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                                 Binding="{Binding Source={x:Reference PhoneNumber}}"
+                                 Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Label  x:Name="EmailAddress"
+                    HorizontalOptions="Start"
                     VerticalOptions="Center"
-                    Text="{Binding PropertyContact.Email, StringFormat=Email: {0}}"
+                    Text="{Binding PropertyContact.Email}"                   
                     TextColor="Black"
                     FontSize="Medium"
                     Grid.Row="2"
                     Grid.Column="0"
-                    Grid.ColumnSpan="2"/>
-            <Label HorizontalOptions="End"
-                    VerticalOptions="Center"
-                    Text="{Binding PropertyContact.Email, StringFormat=Address: {0}}"
-                    TextColor="Black"
-                    FontSize="Medium"
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"/>
+                    Grid.ColumnSpan="2">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                                 Binding="{Binding Source={x:Reference EmailAddress}}"
+                                 Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

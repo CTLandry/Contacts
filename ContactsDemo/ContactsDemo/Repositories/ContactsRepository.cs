@@ -2,6 +2,7 @@
 using ContactsDemo.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,7 @@ namespace ContactsDemo.Repositories
             }
 
         }
+              
 
         public async Task<List<Model_Contact>> GetContactsAsync()
         {
@@ -41,24 +43,25 @@ namespace ContactsDemo.Repositories
             return await Repository.GetContactsAsync(name);
         }
 
-        public async Task<Model_Contact> GetContactsAsync(int contactid)
+        public async Task<Model_Contact> GetContactByIDAsync(int? contactid)
         {
-            return await Repository.GetContactsAsync(contactid);
+            return await Repository.GetContactByIDAsync(contactid);
         }
 
         public async Task<List<Model_Contact>> GetContactsByPhoneAsync(string phone)
         {
-            return await Repository.GetContactsAsync(phone);
+            return await Repository.GetContactsByPhoneAsync(phone);
         }
+         
 
-        public async Task<Model_Contact> GetFavoriteAsync()
-        {
-            return await Repository.GetFavoriteAsync();
-        }
-
-        public async Task<int> SaveContactAsync(Model_Contact item)
+        public async Task<int> SaveContactAsync(IContact item)
         {
             return await Repository.SaveContactAsync(item);
+        }
+
+        public async Task<int> ClearFavorites()
+        {
+            return await Repository.ClearFavorites();
         }
 
         public async Task SyncContacts()
