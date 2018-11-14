@@ -16,8 +16,8 @@ using Java.IO;
 namespace ContactsDemo.Droid.Media
 {
     class Media_Android : Activity, IMedia
-    {
-        
+    {           
+
         public Stream ResolveImage(string imagepath)
         {
             try
@@ -41,6 +41,7 @@ namespace ContactsDemo.Droid.Media
          
         }
 
+        //potential native call for getting contacts
         //public List<Models.Model_Contact> FillContacts()
         //{
 

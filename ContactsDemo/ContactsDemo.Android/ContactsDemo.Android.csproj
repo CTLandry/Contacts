@@ -74,8 +74,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Email\Email_Android.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Media\Media_Android.cs" />
+    <Compile Include="Phone\Phone_Android.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

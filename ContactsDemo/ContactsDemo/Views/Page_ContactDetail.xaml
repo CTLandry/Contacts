@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <Grid x:Name="Contact" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="72"></RowDefinition>
+                <RowDefinition Height="120"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -15,13 +15,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>               
             </Grid.ColumnDefinitions>
-            <Image HorizontalOptions="Center"
+            <Image HorizontalOptions="Start"
                    VerticalOptions="Center"
                    Aspect="AspectFit"
                    Source="{Binding PropertyContact.ContactImageSource}"
                    Grid.Row="0"
                    Grid.Column="0"/>
-            <Image HorizontalOptions="Start"
+            <Image HorizontalOptions="End"
                    VerticalOptions="Center"
                    Aspect="AspectFit"
                    Source="{Binding PropertyContact.FavoriteImageSource}"
@@ -32,7 +32,7 @@
                     VerticalOptions="Center"
                     Text="{Binding PropertyContact.Phone, StringFormat=Phone: \{0:(000)\-0000\}}"
                     TextColor="Black"
-                    FontSize="Medium"
+                    FontSize="Large"
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
@@ -41,14 +41,14 @@
                                  Binding="{Binding Source={x:Reference PhoneNumber}}"
                                  Value="{x:Null}">
                         <Setter Property="IsEnabled" Value="False"/>
-                    </DataTrigger>
+                    </DataTrigger>                    
                 </Label.Triggers>
             </Label>
             <Label  x:Name="EmailAddress"
                     HorizontalOptions="Start"
                     VerticalOptions="Center"
                     Text="{Binding PropertyContact.Email}"                   
-                    TextColor="Black"
+                    TextColor="Blue"
                     FontSize="Medium"
                     Grid.Row="2"
                     Grid.Column="0"

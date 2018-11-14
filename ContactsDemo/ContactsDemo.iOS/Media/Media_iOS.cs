@@ -11,13 +11,18 @@ using System.IO;
 using System.Threading.Tasks;
 using ContactsDemo.Models;
 
+[assembly: Dependency(typeof(ContactsDemo.iOS.Media.Media_iOS))]
 namespace ContactsDemo.iOS.Media
 {
     class Media_iOS : IMedia
     {
+       
         public Stream ResolveImage(string imagepath)
         {
-            throw new NotImplementedException();
+            //TODO
+            return null;
         }
+             
+              
     }
 }

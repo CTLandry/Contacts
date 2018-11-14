@@ -7,7 +7,6 @@ namespace ContactsDemo.Interfaces
 {
     public interface IMedia
     {
-          System.IO.Stream ResolveImage(string imagepath);
-         
+        System.IO.Stream ResolveImage(string imagepath);        
     }
 }
