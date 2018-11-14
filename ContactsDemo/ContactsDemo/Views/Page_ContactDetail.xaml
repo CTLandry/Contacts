@@ -9,11 +9,11 @@
                 <RowDefinition Height="120"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>               
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Image HorizontalOptions="Start"
                    VerticalOptions="Center"
@@ -27,41 +27,49 @@
                    Source="{Binding PropertyContact.FavoriteImageSource}"
                    Grid.Row="0"
                    Grid.Column="1"/>
-            <Label  x:Name="PhoneNumber"
-                    HorizontalOptions="Start"
+            <Button  x:Name="PhoneNumber"
+                    HorizontalOptions="FillAndExpand"
                     VerticalOptions="Center"
+                    BackgroundColor="Blue"
                     Text="{Binding PropertyContact.Phone, StringFormat=Phone: \{0:(000)\-0000\}}"
-                    TextColor="Black"
+                    TextColor="White"
                     FontSize="Large"
+                    Command="{Binding PhoneCall}"
+                    CommandParameter="{Binding PropertyContact.Phone}" 
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
-                <Label.Triggers>
-                    <DataTrigger TargetType="Label"
-                                 Binding="{Binding Source={x:Reference PhoneNumber}}"
-                                 Value="{x:Null}">
-                        <Setter Property="IsEnabled" Value="False"/>
-                    </DataTrigger>                    
-                </Label.Triggers>
-            </Label>
-            <Label  x:Name="EmailAddress"
-                    HorizontalOptions="Start"
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="Text" Value="Empty">
+                        <Setter Property="Command" Value=""/>
+                        <Setter Property="BackgroundColor" Value="DimGray"/>                        
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
+            <Button  x:Name="EmailAddress"
+                    HorizontalOptions="FillAndExpand"
                     VerticalOptions="Center"
-                    Text="{Binding PropertyContact.Email}"                   
-                    TextColor="Blue"
+                    Text="{Binding PropertyContact.Email}"    
+                    BackgroundColor="Aqua"
+                    TextColor="White"
                     FontSize="Medium"
+                    Command="{Binding SendEmail}"
+                    CommandParameter="{Binding PropertyContact.Email}" 
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2">
-                <Label.Triggers>
-                    <DataTrigger TargetType="Label"
-                                 Binding="{Binding Source={x:Reference EmailAddress}}"
-                                 Value="{x:Null}">
-                        <Setter Property="IsEnabled" Value="False"/>
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="Text" Value="Empty">
+                        <Setter Property="Command" Value=""/>
+                        <Setter Property="BackgroundColor" Value="DimGray"/>
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
+            <BoxView
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="SlateGray" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
